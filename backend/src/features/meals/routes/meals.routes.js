@@ -1,8 +1,8 @@
 import express from 'express';
 import { Op } from 'sequelize';
-import auth from '../middleware/auth.js';
-import Meal from '../models/Meal.js';
-import User from '../models/User.js';
+import auth from '../../../core/middleware/auth.js';
+import Meal from '../models/Meal.model.js';
+import User from '../../authentication/models/User.model.js';
 
 const router = express.Router();
 

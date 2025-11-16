@@ -1,5 +1,5 @@
 import { DataTypes, Op } from 'sequelize';
-import { sequelize } from '../config/db.js';
+import { sequelize } from '../../../core/config/db.js';
 
 const Meal = sequelize.define('Meal', {
   id: {

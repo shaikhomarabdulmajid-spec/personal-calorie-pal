@@ -2,17 +2,17 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './config/db.js';
+import connectDB from './src/core/config/db.js';
 
 // Import routes
-import authRoutes from './routes/auth.js';
-import mealsRoutes from './routes/meals.js';
-import foodsRoutes from './routes/foods.js';
-import analyzeRoutes from './routes/analyze.js';
-import analyticsRoutes from './routes/analytics.js';
+import authRoutes from './src/features/authentication/routes/auth.routes.js';
+import mealsRoutes from './src/features/meals/routes/meals.routes.js';
+import foodsRoutes from './src/features/foods/routes/foods.routes.js';
+import analyzeRoutes from './src/features/ai-analysis/routes/analyze.routes.js';
+import analyticsRoutes from './src/features/analytics/routes/analytics.routes.js';
 
 // Import middleware
-import { generalLimiter, authLimiter, uploadLimiter, mealLogLimiter } from './middleware/rateLimiter.js';
+import { generalLimiter, authLimiter, uploadLimiter, mealLogLimiter } from './src/core/middleware/rateLimiter.js';
 
 // Load environment variables
 dotenv.config();

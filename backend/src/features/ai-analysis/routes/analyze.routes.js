@@ -1,8 +1,8 @@
 import express from 'express';
 import multer from 'multer';
-import auth from '../middleware/auth.js';
-import aiService from '../utils/aiService.js';
-import { analyzeFood, validateImageFile, calculateRecommendedSteps } from '../utils/foodAI.js';
+import auth from '../../../core/middleware/auth.js';
+import { getAIRecipeSuggestions } from '../../../core/utils/aiSuggestions.js';
+import { analyzeFood, validateImageFile, calculateRecommendedSteps } from '../../../core/utils/foodAI.js';
 
 const router = express.Router();
 
@@ -52,11 +52,8 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
       });
     }
 
-    // Convert image to base64 for AI analysis
-    const imageBase64 = req.file.buffer.toString('base64');
-    
     // Analyze the image using AI service
-    const analysisResult = await aiService.analyzeFoodFromImage(imageBase64);
+    const analysisResult = await analyzeFood(req.file.buffer, req.file.originalname);
     
     // Calculate recommended steps
     const recommendedSteps = calculateRecommendedSteps(analysisResult.totalCalories);

@@ -1,8 +1,8 @@
 import express from 'express';
-import auth from '../middleware/auth.js';
-import Meal from '../models/Meal.js';
-import User from '../models/User.js';
-import { getAIRecipeSuggestions } from '../utils/aiSuggestions.js';
+import auth from '../../../core/middleware/auth.js';
+import Meal from '../../meals/models/Meal.model.js';
+import User from '../../authentication/models/User.model.js';
+import { getAIRecipeSuggestions } from '../../../core/utils/aiSuggestions.js';
 
 
 const router = express.Router();

@@ -1,5 +1,5 @@
-import Meal from '../models/Meal.js';
-import User from '../models/User.js';
+import Meal from '../../features/meals/models/Meal.model.js';
+import User from '../../features/authentication/models/User.model.js';
 
 /**
  * AI Recommendations Engine

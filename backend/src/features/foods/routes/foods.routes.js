@@ -1,7 +1,7 @@
 import express from 'express';
-import auth from '../middleware/auth.js';
-import { getFoodDatabase } from '../utils/foodAI.js';
-import Meal from '../models/Meal.js';
+import auth from '../../../core/middleware/auth.js';
+import { getFoodDatabase } from '../../../core/utils/foodAI.js';
+import Meal from '../../meals/models/Meal.model.js';
 
 const router = express.Router();
 
