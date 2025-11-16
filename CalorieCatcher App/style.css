@@ -1,0 +1,176 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, #888, #eaeaea);
+  background: url("https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1920&q=80")
+    no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+}
+
+.main-box {
+  background: rgba(200, 200, 200, 0.85);
+  border-radius: 15px;
+  padding: 40px;
+  width: 600px; /* increased width */
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  top: -40px; /* move up slightly */
+}
+
+#fileNameDisplay {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #333;
+  font-style: italic;
+}
+
+
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-upload {
+  display: inline-block;
+  background: rgba(240, 240, 240, 0.8);
+  border: 1px solid #999;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #000;
+  transition: 0.3s;
+}
+
+.custom-upload:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.03);
+}
+
+button {
+  background: rgba(230, 230, 230, 0.7);
+  border: 1px solid #999;
+  color: #000;
+  font-weight: 600;
+  padding: 12px 24px;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: rgba(230, 230, 230, 0.9);
+  transform: scale(1.03);
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #333;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none;
+}
+
+.top-buttons {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.popup {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+}
+.cancel-btn {
+  background: rgba(255, 150, 150, 0.8);
+  color: #000;
+  border: 1px solid #900;
+  transition: 0.3s;
+}
+
+.cancel-btn:hover {
+  background: rgba(255, 100, 100, 0.9);
+  transform: scale(1.03);
+}
+
+/* === POPUP ANIMATION BASE === */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  background: white;
+  padding: 25px;
+  width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s ease;
+  z-index: 9999;
+}
+
+/* When popup is active */
+.popup.show {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+/* Dark overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  z-index: 9998;
+}
+
+.overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+
