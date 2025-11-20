@@ -1,180 +1,188 @@
-const BASE_URL = "https://nutriwalk-prototype.onrender.com";
+const BACKEND_URL = "https://nutriwalk-prototype.onrender.com";
 
-const analyzeBtn = document.getElementById("analyzeBtn");
+// PAGE LOAD ANIMATION
+window.onload = () => {
+  setTimeout(() => {
+    document.getElementById("glassCard").classList.add("show");
+  }, 300);
+};
+
+
+
+// POPUP HANDLING
+function showPopup(element) {
+  element.classList.remove("hidden");
+  console.log("Spinner should now be visible"); // Changed
+  setTimeout(() => element.classList.add("show"), 10);
+}
+
+function hidePopup(element) {
+  element.classList.remove("show");
+  setTimeout(() => element.classList.add("hidden"), 300);
+}
+
+// Login + Register popup show/hide
+loginBtn.onclick = () => { hidePopup(registerForm); showPopup(loginForm); };
+registerBtn.onclick = () => { hidePopup(loginForm); showPopup(registerForm); };
+cancelLogin.onclick = () => hidePopup(loginForm);
+cancelRegister.onclick = () => hidePopup(registerForm);
+
+// FILE NAME DISPLAY
+
 const imageUpload = document.getElementById("imageUpload");
-const loading = document.getElementById("loading");
-const result = document.getElementById("result");
-const foodList = document.getElementById("foodList");
-const totalCalories = document.getElementById("totalCalories");
-
-const loginBtn = document.getElementById("loginBtn");
-const registerBtn = document.getElementById("registerBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
 const fileNameDisplay = document.getElementById("fileNameDisplay");
-
-const overlay = document.getElementById("overlay");
 
 imageUpload.addEventListener("change", () => {
   const file = imageUpload.files[0];
   fileNameDisplay.textContent = file ? `Selected: ${file.name}` : "No file selected";
 });
 
-// Helper to open popup
-function openPopup(popup) {
-  overlay.classList.add("show");
-  overlay.classList.remove("hidden");
 
-  popup.classList.add("show");
-  popup.classList.remove("hidden");
-}
+// LOGIN FUNCTION
+confirmLogin.addEventListener("click", async () => {
+  const username = loginUsername.value.trim();
+  const password = loginPassword.value.trim();
 
-// Helper to close popup
-function closePopup(popup) {
-  popup.classList.remove("show");
-  overlay.classList.remove("show");
-
-  setTimeout(() => {
-    popup.classList.add("hidden");
-    overlay.classList.add("hidden");
-  }, 300);
-}
-
-// -------------------
-// ANALYZE FOOD IMAGE
-// -------------------
-analyzeBtn.onclick = async () => {
-  const file = imageUpload.files[0];
-  if (!file) {
-    alert("Please upload an image first!");
+  if (!username || !password) {
+    showToast("All fields are required to be filled");
     return;
   }
 
-  loading.classList.remove("hidden");
-  result.classList.add("hidden");
-
-  const formData = new FormData();
-  formData.append("file", file);
-
   try {
-    const res = await fetch(`${BASE_URL}/analyze`, {
+    const res = await fetch(`${BACKEND_URL}/login`, {
       method: "POST",
-      body: formData,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
     });
 
     const data = await res.json();
-    loading.classList.add("hidden");
+
+    if (data.success) {
+      showToast("Logged in!");
+      hidePopup(loginForm);
+    } else {
+      showToast("Login failed: " + data.message);
+    }
+  } catch {
+    showToast("Cannot reach backend");
+  }
+});
+
+
+// REGISTER FUNCTION
+confirmRegister.addEventListener("click", async () => {
+  const username = registerUsername.value.trim();
+  const password = registerPassword.value.trim();
+
+  if (!username || !password) {
+    showToast("All fields are required to be filled");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      showToast("Registered!");
+      hidePopup(registerForm);
+      loadHistory(username); // Change
+    } else {
+      showToast("Register failed: " + data.message);
+    }
+  } catch {
+    showToast("Cannot reach backend");
+  }
+});
+
+// ANALYZE BUTTON — IMAGE UPLOAD
+document.getElementById("analyzeBtn").addEventListener("click", async () => {
+  console.log("Analyze button clicked");
+
+  const file = imageUpload.files[0];
+  const spinner = document.getElementById("inlineSpinner");
+
+  if (!file) {
+    showToast("Please upload an image first!");
+    return;
+  }
+
+  spinner.classList.remove("hidden"); // SHOW SPINNER
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/analyze`, {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    spinner.classList.add("hidden"); // HIDE SPINNER
 
     if (!data.success) {
-      alert(data.message || "Analysis failed");
+      result.innerHTML = "Error: " + data.message;
       return;
     }
 
-    result.classList.remove("hidden");
-    foodList.innerHTML = "";
-    data.foods.forEach((f) => {
+    result.innerHTML = `
+      <h3>${data.food}</h3>
+      <p>Calories: ${data.calories}</p>
+      <p>Steps Required: ${data.steps} steps</p>
+    `;
+
+  } catch {
+    spinner.classList.add("hidden"); // HIDE SPINNER ON ERROR
+    result.innerHTML = "Server error. Check backend.";
+  }
+});
+
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  document.getElementById("toastContainer").appendChild(toast);
+
+  setTimeout(() => toast.classList.add("show"), 10);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+async function loadHistory(username) {
+  const historySection = document.getElementById("historySection");
+  const historyList = document.getElementById("historyList");
+
+  historyList.innerHTML = "<li>Loading history…</li>";
+  historySection.classList.remove("hidden");
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/history?username=${username}`);
+    const data = await res.json();
+
+    if (!data.success || !Array.isArray(data.history)) {
+      historyList.innerHTML = "<li>No history found.</li>";
+      return;
+    }
+
+    // Build list
+    historyList.innerHTML = "";
+    data.history.forEach(entry => {
       const li = document.createElement("li");
-      li.textContent = `${f.name} — ${f.calories} kcal`;
-      foodList.appendChild(li);
+      li.textContent = `${entry.food} — ${entry.calories} calories`;
+      historyList.appendChild(li);
     });
 
-    totalCalories.textContent = `Total: ${data.total_calories} kcal`;
-
-    const stepsNeeded = Math.round(data.total_calories * 20);
-    const stepsNote = document.createElement("p");
-    stepsNote.style.marginTop = "10px";
-    stepsNote.style.fontSize = "1rem";
-    stepsNote.style.color = "#333";
-    stepsNote.textContent = `To balance this, you might aim for about ${stepsNeeded.toLocaleString()} steps today.`;
-    result.appendChild(stepsNote);
   } catch (err) {
-    console.error(err);
-    loading.classList.add("hidden");
-    alert("Error connecting to backend");
+    historyList.innerHTML = "<li>Error loading history.</li>";
   }
-};
-
-// -------------------
-// LOGIN / REGISTER POPUPS
-// -------------------
-loginBtn.onclick = () => {
-  registerForm.classList.add("hidden");
-  registerForm.classList.remove("show");
-  openPopup(loginForm);
-};
-
-registerBtn.onclick = () => {
-  loginForm.classList.add("hidden");
-  loginForm.classList.remove("show");
-  openPopup(registerForm);
-};
-
-// Cancel buttons
-document.getElementById("cancelLogin").onclick = () => {
-  closePopup(loginForm);
-};
-
-document.getElementById("cancelRegister").onclick = () => {
-  closePopup(registerForm);
-};
-
-// Clicking outside closes popup
-overlay.onclick = () => {
-  closePopup(loginForm);
-  closePopup(registerForm);
-};
-
-// Confirm login
-document.getElementById("confirmLogin").onclick = async () => {
-  const username = document.getElementById("loginUsername").value;
-  const password = document.getElementById("loginPassword").value;
-
-  try {
-    const res = await fetch(`${BASE_URL}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-
-    if (data.success) {
-      alert("Login successful!");
-      localStorage.setItem("username", username);
-      closePopup(loginForm);
-
-      loginBtn.classList.add("hidden");
-      registerBtn.classList.add("hidden");
-      logoutBtn.classList.remove("hidden");
-    } else {
-      alert(data.message || "Login failed");
-    }
-  } catch (err) {
-    alert("Error connecting to backend");
-  }
-};
-
-// Confirm register
-document.getElementById("confirmRegister").onclick = async () => {
-  const username = document.getElementById("registerUsername").value;
-  const password = document.getElementById("registerPassword").value;
-
-  try {
-    const res = await fetch(`${BASE_URL}/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-
-    if (data.success) {
-      alert("Registration successful!");
-      closePopup(registerForm);
-    } else {
-      alert(data.message || "Registration failed");
-    }
-  } catch (err) {
-    alert("Error connecting to backend");
-  }
-};
+}
