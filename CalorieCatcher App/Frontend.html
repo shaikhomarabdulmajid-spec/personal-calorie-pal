@@ -6,6 +6,7 @@
   <title>CalCatcher AI Calorie Analyzer</title>
   <link rel="stylesheet" href="style.css">
 </head>
+<div id="toastContainer"></div>
 <body>
 
   <div class="top-buttons">
@@ -14,49 +15,58 @@
     <button id="logoutBtn" class="hidden">Logout</button>
   </div>
 
-  <div class="main-box">
-    <h1>Calorie Capture</h1>
-    <h4>Your smart calorie tracking app</h4>
+  <!-- LIQUID GLASS MAIN CARD -->
+  <div id="glassCard" class="main-box">
 
-  <!-- LOGIN FORM -->
-  <div id="loginForm" class="popup hidden">
-    <h2>Login</h2>
-    <input type="text" id="loginUsername" placeholder="Username">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <div class="popup-buttons">
-      <button id="confirmLogin">Login</button>
-      <button id="cancelLogin" class="cancel-btn">Cancel</button>
+    <h1 class="app-title">CalCatcher</h1>
+    <h4 class="subtitle">Your Smart Calorie Analyzer</h4>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm" class="popup hidden">
+      <h2>Login</h2>
+      <input type="text" id="loginUsername" placeholder="Username">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <div class="popup-buttons">
+        <button id="confirmLogin">Login</button>
+        <button id="cancelLogin" class="cancel-btn">Cancel</button>
+      </div>
     </div>
-  </div>
 
-  <!-- REGISTER FORM -->
-  <div id="registerForm" class="popup hidden">
-    <h2>Register</h2>
-    <input type="text" id="registerUsername" placeholder="Username">
-    <input type="password" id="registerPassword" placeholder="Password">
-    <div class="popup-buttons">
-      <button id="confirmRegister">Register</button>
-      <button id="cancelRegister" class="cancel-btn">Cancel</button>
+    <!-- REGISTER FORM -->
+    <div id="registerForm" class="popup hidden">
+      <h2>Register</h2>
+      <input type="text" id="registerUsername" placeholder="Username">
+      <input type="password" id="registerPassword" placeholder="Password">
+      <div class="popup-buttons">
+        <button id="confirmRegister">Register</button>
+        <button id="cancelRegister" class="cancel-btn">Cancel</button>
+      </div>
     </div>
-  </div>
-
 
     <div id="uploadSection">
       <label for="imageUpload" class="custom-upload">Upload Food Image</label>
       <input type="file" id="imageUpload" accept="image/*">
       <p id="fileNameDisplay">No file selected</p>
       <button id="analyzeBtn">Analyze</button>
-    </div>
-
-    <div id="loading" class="hidden spinner"></div>
-    <div id="result" class="hidden">
-      <h2>Detected Foods:</h2>
-      <ul id="foodList"></ul>
-      <p id="totalCalories"></p>
+      <div id="inlineSpinner" class="hidden">
+        <div class="small-spinner"></div>
+        <p>Analyzing…</p>
+      </div>
     </div>
   </div>
-  <div id="overlay" class="overlay hidden"></div>
 
+  <div id="result" class="hidden">
+    <h2>Detected Foods:</h2>
+    <ul id="foodList"></ul>
+    <p id="totalCalories"></p>
+  </div>
+  <div id="historySection" class="hidden">
+    <h2>Your Previous Meals</h2>
+    <ul id="historyList"></ul>
+  </div>
+
+
+  <div id="overlay" class="overlay hidden"></div>
 
   <script src="Frontend.js"></script>
 </body>
