@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalCatcher Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- ADDED: FontAwesome CDN (Crucial for icons to show) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <div class="floating-pattern">
+        <i class="fas fa-burger float-icon p1"></i>
+        <i class="fas fa-apple-whole float-icon p2"></i>
+        <i class="fas fa-carrot float-icon p3"></i>
+        <i class="fas fa-pizza-slice float-icon p4"></i>
+        <i class="fas fa-mug-hot float-icon p5"></i>
+        <i class="fas fa-ice-cream float-icon p6"></i>
+        <i class="fas fa-leaf float-icon p7"></i>
+        <i class="fas fa-drumstick-bite float-icon p8"></i>
+        <i class="fas fa-lemon float-icon p9"></i>
+        <i class="fas fa-pepper-hot float-icon p10"></i>
+        <i class="fas fa-fish float-icon p11"></i>
+        <i class="fas fa-egg float-icon p12"></i>
+    </div>
+
+    <div id="app-container">
+        
+        <!-- LOGIN VIEW -->
+        <div id="view-login" class="view active">
+            <div class="login-wrapper">
+                <div class="logo-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                <h1>CalCatcher</h1>
+                <p class="subtitle">AI-Powered Nutrition Intelligence</p>
+                
+                <form id="loginForm">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user input-icon"></i>
+                        <input type="text" id="username" placeholder="Enter Username" required autocomplete="off">
+                    </div>
+                    <button type="submit">Start Tracking <i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view">
+            <div class="header">
+                <div>
+                    <p style="color: #6B7280; font-size: 14px;">Welcome back,</p>
+                    <h2 id="user-display">User</h2>
+                </div>
+                <div class="avatar"><i class="fa-solid fa-user-circle"></i></div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stat-item">
+                    <div class="stat-val" id="total-cals">0</div>
+                    <div class="stat-label">Eaten</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">2000</div>
+                    <div class="stat-label">Goal</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val" id="health-score" style="color: #10B981;">85</div>
+                    <div class="stat-label">Health Score</div>
+                </div>
+            </div>
+
+            <div class="action-grid">
+                <div class="action-btn" onclick="document.getElementById('fileInput').click()">
+                    <span class="action-icon"><i class="fa-solid fa-camera"></i></span>
+                    <strong>Scan Food</strong>
+                </div>
+                <div class="action-btn" onclick="document.getElementById('searchInput').focus()">
+                    <span class="action-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <strong>Search</strong>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search food (e.g. Burger)...">
+                <div id="searchResults"></div>
+            </div>
+
+            <h3 style="margin-bottom: 12px;">Today's Meals</h3>
+            <div id="meal-list" class="meal-list">
+                <!-- Meals go here -->
+            </div>
+        </div>
+
+        <!-- LOADING OVERLAY -->
+        <div id="loading-overlay" class="hidden">
+            <div class="spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+            <h3 id="loading-text">Analyzing...</h3>
+            <p style="color: #6B7280; font-size: 14px;">AI is scanning your food</p>
+        </div>
+
+        <!-- HIDDEN INPUT -->
+        <input type="file" id="fileInput" hidden>
+
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
