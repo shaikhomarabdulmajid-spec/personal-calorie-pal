@@ -2,6 +2,10 @@
 
 AI-Powered Nutrition Intelligence.
 
+<img width="1917" height="862" alt="CalCatcher - Demo" src="https://github.com/user-attachments/assets/d70e42b4-b7d3-4e93-8432-3fec0395a4ad" />
+
+
+
 ## 🚀 Setup Locally
 
 1. Install dependencies:
