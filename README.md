@@ -29,3 +29,6 @@ AI-Powered Nutrition Intelligence.
    - **Root Directory:** `.` (Leave this blank!)
    - **Build Command:** `npm install`
    - **Start Command:** `node server.js`
+  
+## ⚔️ Challenges Faced
+Integrating the Frontend and the Backend on our initial design was a major headache. the buttons would stop working, the animations would glitch out, and the image detection wouldn't work. The whole app was then redesigned by my teammate. he seamlessly integrated the frontend to the backend along with the Image Recognition API.
