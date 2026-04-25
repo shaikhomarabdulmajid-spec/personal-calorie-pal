@@ -31,4 +31,4 @@ AI-Powered Nutrition Intelligence.
    - **Start Command:** `node server.js`
   
 ## ⚔️ Challenges Faced
-Integrating the Frontend and the Backend on our initial design was a major headache. the buttons would stop working, the animations would glitch out, and the image detection wouldn't work. The whole app was then redesigned by my teammate. he seamlessly integrated the frontend to the backend along with the Image Recognition API.
+Integrating the Frontend and the Backend on our initial design was a major headache. the buttons would stop working, the animations would glitch out, and the image detection wouldn't work. The whole app was then redesigned by my teammate. He seamlessly integrated the frontend to the backend along with the Image Recognition API. The end product turned out to be even better than what either of us had expected.
