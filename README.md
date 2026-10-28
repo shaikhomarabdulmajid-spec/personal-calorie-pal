@@ -22,16 +22,6 @@ CalCatcher is an <strong>AI-Powered Nutrition Intelligence</strong> app that tak
    ```
 
 3. Open http://localhost:3001
-
-## ☁️ Deployment (Render.com)
-
-1. Push this repository to GitHub.
-2. Create a new **Web Service** on Render.
-3. Connect your repository.
-4. **Settings:**
-   - **Root Directory:** `.` (Leave this blank!)
-   - **Build Command:** `npm install`
-   - **Start Command:** `node server.js`
   
 ## ⚔️ Challenges Faced
 Integrating the Frontend and the Backend on our initial design was a major headache. The buttons would stop working, the animations would glitch out, and the image detection would tweak out. The whole app was then redesigned. My teammate seamlessly integrated the frontend to the backend along with the Image Recognition API. The end product turned out to be even better than what we expected.
